@@ -5,7 +5,7 @@ FPGA FAST image feature detector implementation in VHDL.
 
 Created by the PUT Vision Lab.
 
-You are free to use the code for research/hobby purposes. If you plan to use the code or its fragments in a commercial application, please contact the Authors, so that further agreements can be made. If you find the code useful, the Authors would be really grateful if you cite the folowing articles:
+You are free to use the code for research/hobby purposes. If you plan to use the code or its fragments in a commercial application, please contact the Authors, so that further agreements can be made. If the posted code is useful to you, the Authors would be really grateful if you cite the folowing articles:
 
 System on chip coprocessors for high speed image feature detection and matching
 M. Kraft, M. Fularz, A. Kasinski
