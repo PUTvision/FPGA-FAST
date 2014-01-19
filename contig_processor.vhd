@@ -158,7 +158,7 @@ begin
 			contig_d2 <= '0';
 			contig_d3 <= '0';
 		elsif ce='1' then
-			contig_d1 <=contig_d or contig_b; 	-- laczenie warunkow
+			contig_d1 <=contig_d or contig_b; 	-- combine conditions
 			contig_d2 <= contig_d1;
 			contig_d3 <= contig_d2;
 			contig <= contig_d3;

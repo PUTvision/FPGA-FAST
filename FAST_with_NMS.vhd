@@ -46,11 +46,11 @@ signal iscorner_int : std_logic;
 
 component NMS_top is
 port(
-		data_in : in std_logic_vector(12 downto 0); -- dane z corner score
-		iscorner, clk, EN, rst : in std_logic;	-- dane z contig + zegar
+		data_in : in std_logic_vector(12 downto 0); -- corner score data
+		iscorner, clk, EN, rst : in std_logic;	-- contig + clock data
 		x_coord_in, y_coord_in : in std_logic_vector(9 downto 0);
 		x_coord_out, y_coord_out : out std_logic_vector(9 downto 0);
-		corner_out : out std_logic -- ostateczne wykryte narozniki - po NMS
+		corner_out : out std_logic -- corners detected after NMS
 );
 end component;
 
@@ -59,8 +59,8 @@ port(
 			data_in : in std_logic_vector(7 downto 0);
 			clk, rst, ce : in std_logic;
 			iscorner : out  std_logic;
-			x_coord : out std_logic_vector(9 downto 0);			-- opozniona wsp. X punktu
-			y_coord : out std_logic_vector(9 downto 0);			-- opozniona wsp. Y punktu
+			x_coord : out std_logic_vector(9 downto 0);			-- delayed X coord.
+			y_coord : out std_logic_vector(9 downto 0);			-- delayed Y coord.
 			score : out std_logic_vector(12 downto 0)
 		);
 end component;

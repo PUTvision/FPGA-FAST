@@ -31,14 +31,14 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity input_fifo is
 generic (
-				depth: integer :=640;	-- ilosc bajtow w kolejce (rozdzielczosc pozioma)
-				v_res : integer :=480 	-- rozdzielczosc pionowa				
+				depth: integer :=640;	-- bytes in FIFO (horizontal resolution)
+				v_res : integer :=480 	-- vertical resolution				
 			);  
 port(
 		data_in : in std_logic_vector(7 downto 0);
 		clk, rst, ce : in std_logic;								-- ce - global clock enable 
-		x_coord : out std_logic_vector(9 downto 0);			-- opozniona wsp. X punktu
-		y_coord : out std_logic_vector(9 downto 0);			-- opozniona wsp. Y punktu
+		x_coord : out std_logic_vector(9 downto 0);			-- delayed X coord
+		y_coord : out std_logic_vector(9 downto 0);			-- delayed Y coord
 		o00, o01, o02, o03, o04, o05, o06 : out std_logic_vector(7 downto 0); 
 		o10, o11, o12, o13, o14, o15, o16 : out std_logic_vector(7 downto 0); 
 		o20, o21, o22, o23, o24, o25, o26 : out std_logic_vector(7 downto 0); 
@@ -65,7 +65,7 @@ signal o_60, o_61, o_62, o_63, o_64, o_65, o_66 : std_logic_vector(7 downto 0);
 
 signal v_cnt : unsigned (9 downto 0);
 signal v_cnt_delayed : unsigned (9 downto 0);
-signal EN_y : std_logic;		-- clock enable dla opoznienia wspolrzednej Y - aktywny na na koncu linii obrazu
+signal EN_y : std_logic;		-- clock enable for delayed Y coord - active at the end of image line
 
 attribute ram_style: string; 
 attribute ram_style of ram_0 : signal is "block"; 
@@ -215,8 +215,8 @@ begin
 			address_write<=to_unsigned(1, 10);
 		else		
 			if ce='1' then
-				if address_read=to_unsigned(depth-1, 10) then	-- jak dojdzie do maks. rozdz. poziomej
-					if v_cnt=to_unsigned(v_res-1, 9) then			-- odpowiednio obsluguje licznik rozdz. pionowej
+				if address_read=to_unsigned(depth-1, 10) then	-- whenever max. horizontal resolution reached
+					if v_cnt=to_unsigned(v_res-1, 9) then			-- vertical resolution counter handler
 						v_cnt<=(others=>'0');
 					else
 						v_cnt<=v_cnt+1;

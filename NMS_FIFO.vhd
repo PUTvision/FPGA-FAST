@@ -27,10 +27,10 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity NMS_FIFO is
-generic (depth: integer :=640);  -- ilosc bajtow w kolejce (rozdzielczosc pozioma)
+generic (depth: integer :=640);  -- horizontal image resolution
 port(
 		data_in : in std_logic_vector(33 downto 0);
-		clk, rst, EN : in std_logic;								-- EN - globalny enable
+		clk, rst, EN : in std_logic;								-- EN - global enable
 		o11, o12, o13, o14, o15, o16, o17 : out std_logic_vector(33 downto 0); -- [--x_coord(10)--|--y_coord(10)--|--iscorner(1)--|--score(13)--] total of 34 bits
 		o21, o22, o23, o24, o25, o26, o27 : out std_logic_vector(33 downto 0); 
 		o31, o32, o33, o34, o35, o36, o37 : out std_logic_vector(33 downto 0);
@@ -69,76 +69,70 @@ ram_handler : process(clk, rst)
 begin
 	if clk='1' and clk'event then
 		if EN='1' then
-			ram_1(to_integer(address_write))<=data_in; 		--wejsciowe dane do 1 bufora 
-																						--opozniajacego
-			ram_2(to_integer(address_write))<=data_out_1; 	--wejsciowe dane do 2 bufora 
-																						--opozniajacego
-			ram_3(to_integer(address_write))<=data_out_2; 	--wejsciowe dane do 3 bufora 
-																						--opozniajacego
-			ram_4(to_integer(address_write))<=data_out_3; 	--wejsciowe dane do 4 bufora 
-																						--opozniajacego
-			ram_5(to_integer(address_write))<=data_out_4; 	--wejsciowe dane do 5 bufora 
-																						--opozniajacego
-			ram_6(to_integer(address_write))<=data_out_5; 	--wejsciowe dane do 6 bufora 
-																						--opozniajacego
+			ram_1(to_integer(address_write))<=data_in; 		
+			ram_2(to_integer(address_write))<=data_out_1; 	
+			ram_3(to_integer(address_write))<=data_out_2; 	
+			ram_4(to_integer(address_write))<=data_out_3; 	
+			ram_5(to_integer(address_write))<=data_out_4; 	
+			ram_6(to_integer(address_write))<=data_out_5; 	
 
-			data_out_1<=ram_1(to_integer(address_read));	--odczyt z FIFO nr 1
-			data_out_2<=ram_2(to_integer(address_read));	--odczyt z FIFO nr 2
-			data_out_3<=ram_3(to_integer(address_read));	--odczyt z FIFO nr 3
-			data_out_4<=ram_4(to_integer(address_read));	--odczyt z FIFO nr 4
-			data_out_5<=ram_5(to_integer(address_read));	--odczyt z FIFO nr 5
-			data_out_6<=ram_6(to_integer(address_read));	--odczyt z FIFO nr 6
+			data_out_1<=ram_1(to_integer(address_read));	--read from FIFO 1
+			data_out_2<=ram_2(to_integer(address_read));	--read from FIFO 2
+			data_out_3<=ram_3(to_integer(address_read));	--read from FIFO 3
+			data_out_4<=ram_4(to_integer(address_read));	--read from FIFO 4
+			data_out_5<=ram_5(to_integer(address_read));	--read from FIFO 5
+			data_out_6<=ram_6(to_integer(address_read));	--read from FIFO 6
 			
-			o_77<=data_in;	-- siodmy wiersz w oknie - najpozniej wchodzi
-			o_76<=o_77;		-- wiec przepisywany z wejscia data_in
+			o_77<=data_in;	-- 7th row in the window
+			o_76<=o_77;		-- coming from data_in
 			o_75<=o_76;		
 			o_74<=o_75;		
 			o_73<=o_74;		
 			o_72<=o_73;		
 			o_71<=o_72;		
 
-			o_67<=data_out_1;	-- szósty wiersz w oknie - najpozniej wchodzi
-			o_66<=o_67;		-- wiec z 1. pamieci RAM
+			o_67<=data_out_1;	
+			o_66<=o_67;		
 			o_65<=o_66;		
 			o_64<=o_65;		
 			o_63<=o_64;		
 			o_62<=o_63;		
 			o_61<=o_62;		
 			
-			o_57<=data_out_2;	-- pi¹ty wiersz - opozniony przez 1 kolejke
-			o_56<=o_57;			-- wiec z 2. pamieci RAM
+			o_57<=data_out_2;	
+			o_56<=o_57;			
 			o_55<=o_56;		
 			o_54<=o_55;		
 			o_53<=o_54;		
 			o_52<=o_53;		
 			o_51<=o_52;		
 
-			o_47<=data_out_3;	-- czwarty wiersz - opozniony przez 2 kolejki
-			o_46<=o_47;			-- wiec z 3. pamieci RAM
+			o_47<=data_out_3;	
+			o_46<=o_47;			
 			o_45<=o_46;		
 			o_44<=o_45;		
 			o_43<=o_44;		
 			o_42<=o_43;		
 			o_41<=o_42;		
 
-			o_37<=data_out_4;	-- trzeci wiersz - opozniony przez 3 kolejki
-			o_36<=o_37;			-- wiec z 4. pamieci RAM
+			o_37<=data_out_4;	
+			o_36<=o_37;			
 			o_35<=o_36;		
 			o_34<=o_35;		
 			o_33<=o_34;		
 			o_32<=o_33;		
 			o_31<=o_32;		
 
-			o_27<=data_out_5;	-- drugi wiersz - opozniony przez 4 kolejki
-			o_26<=o_27;			-- wiec z 5. pamieci RAM
+			o_27<=data_out_5;	
+			o_26<=o_27;			
 			o_25<=o_26;		
 			o_24<=o_25;		
 			o_23<=o_24;		
 			o_22<=o_23;		
 			o_21<=o_22;		
 
-			o_17<=data_out_6;	-- drugi wiersz - opozniony przez 4 kolejki
-			o_16<=o_17;			-- wiec z 6. pamieci RAM
+			o_17<=data_out_6;	
+			o_16<=o_17;			
 			o_15<=o_16;		
 			o_14<=o_15;		
 			o_13<=o_14;		
@@ -146,14 +140,14 @@ begin
 			o_11<=o_12;		
 
 
---			+---+---+---+---+---+---+---+				organizacja okna:
---			|o11|o12|o13|o14|o15|o16|o17|				o(nr wiersza, nr kolumny)		
+--			+---+---+---+---+---+---+---+				window arrangement:
+--			|o11|o12|o13|o14|o15|o16|o17|				o(row number, col. number)		
 --			+---+---+---+---+---+---+---+			
 --			|o21|o22|o23|o24|o25|o26|o27|					
 --			+---+---+---+---+---+---+---+			
 --			|o31|o32|o33|o34|o35|o36|o37|					
 --			+---+---+---+---+---+---+---+			
---			|o41|o42|o43|o44|o45|o46|o47|				-- o44 to œrodek	
+--			|o41|o42|o43|o44|o45|o46|o47|				-- o44 is the middle
 --			+---+---+---+---+---+---+---+			
 --			|o51|o52|o53|o54|o55|o56|o57|					
 --			+---+---+---+---+---+---+---+			

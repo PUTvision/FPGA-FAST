@@ -34,15 +34,15 @@ port(
 			data_in : in std_logic_vector(7 downto 0);
 			clk, rst, ce : in std_logic;
 			iscorner : out  std_logic;
-			x_coord : out std_logic_vector(9 downto 0);			-- opozniona wsp. X punktu
-			y_coord : out std_logic_vector(9 downto 0);			-- opozniona wsp. Y punktu
+			x_coord : out std_logic_vector(9 downto 0);			-- delayed X coord.
+			y_coord : out std_logic_vector(9 downto 0);			-- delayed Y coord.
 			score : out std_logic_vector(12 downto 0)
 		);
 end fast_main_top;
 
 architecture Behavioral of fast_main_top is
 
-signal int02, int03, int04 : std_logic_vector(7 downto 0); -- dla fifo
+signal int02, int03, int04 : std_logic_vector(7 downto 0); -- to FIFO
 signal int11, int15 : std_logic_vector(7 downto 0);
 signal int20, int26 : std_logic_vector(7 downto 0);
 signal int30, int33, int36 : std_logic_vector(7 downto 0);
@@ -51,21 +51,21 @@ signal int51, int55 : std_logic_vector(7 downto 0);
 signal int62, int63, int64 : std_logic_vector(7 downto 0);
 
 
-signal int0b, int1b, int2b, int3b, int4b, int5b, int6b, int7b, int8b, int9b, int10b, int11b, int12b, int13b, int14b, int15b : std_logic_vector(9 downto 0); -- do corner score
+signal int0b, int1b, int2b, int3b, int4b, int5b, int6b, int7b, int8b, int9b, int10b, int11b, int12b, int13b, int14b, int15b : std_logic_vector(9 downto 0); -- for corner score
 signal int0d, int1d, int2d, int3d, int4d, int5d, int6d, int7d, int8d, int9d, int10d, int11d, int12d, int13d, int14d, int15d : std_logic_vector(9 downto 0);
 
 signal bright_int, dark_int : std_logic_vector(15 downto 0);
 
 component input_fifo is
 generic (
-				depth: integer :=640;	-- ilosc bajtow w kolejce (rozdzielczosc pozioma)
-				v_res : integer :=480 	-- rozdzielczosc pionowa				
+				depth: integer :=640;	
+				v_res : integer :=480 					
 			);  
 port(
 		data_in : in std_logic_vector(7 downto 0);
 		clk, rst, ce : in std_logic;								-- ce - global clock enable 
-		x_coord : out std_logic_vector(9 downto 0);			-- opozniona wsp. X punktu
-		y_coord : out std_logic_vector(9 downto 0);			-- opozniona wsp. Y punktu
+		x_coord : out std_logic_vector(9 downto 0);			-- delayed X coord.
+		y_coord : out std_logic_vector(9 downto 0);			-- delayed Y coord.
 		o00, o01, o02, o03, o04, o05, o06 : out std_logic_vector(7 downto 0); 
 		o10, o11, o12, o13, o14, o15, o16 : out std_logic_vector(7 downto 0); 
 		o20, o21, o22, o23, o24, o25, o26 : out std_logic_vector(7 downto 0); 

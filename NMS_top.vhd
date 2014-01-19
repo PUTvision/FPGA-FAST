@@ -43,11 +43,11 @@ architecture Behavioral of NMS_top is
 
 
 component NMS_FIFO is
-generic (depth: integer :=640);  -- ilosc bajtow w kolejce (rozdzielczosc pozioma)
+generic (depth: integer :=640);  -- image resolution
 port(
 		data_in : in std_logic_vector(33 downto 0);
-		clk, rst, EN : in std_logic;								-- EN - globalny enable
-		o11, o12, o13, o14, o15, o16, o17 : out std_logic_vector(33 downto 0); -- MSB to iscorner
+		clk, rst, EN : in std_logic;								-- EN - global enable
+		o11, o12, o13, o14, o15, o16, o17 : out std_logic_vector(33 downto 0); -- MSB -> iscorner
 		o21, o22, o23, o24, o25, o26, o27 : out std_logic_vector(33 downto 0); 
 		o31, o32, o33, o34, o35, o36, o37 : out std_logic_vector(33 downto 0);
 		o41, o42, o43, o44, o45, o46, o47 : out std_logic_vector(33 downto 0);
@@ -144,7 +144,7 @@ nonmax : NMS port map(
 								inp76=>int76(12 downto 0),
 								inp77=>int77(12 downto 0),
 							
-								iscorner=>int44(13), 			-- z contig testu
+								iscorner=>int44(13), 			-- from contig test
 								x_coord_in=>int44(33 downto 24),
 								y_coord_in=>int44(23 downto 14),
 								
