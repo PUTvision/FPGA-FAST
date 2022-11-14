@@ -5,11 +5,15 @@
 [![GitHub stars](https://img.shields.io/github/stars/PUTvision/FPGA-FAST)](https://github.com/PUTvision/FPGA-FAST/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/PUTvision/FPGA-FAST)](https://github.com/PUTvision/FPGA-FAST/network/members)
 
-
-
 Created by the PUT Vision Lab.
 
 ## Description
+
+![screenshot.png](screenshot.png)
+
+Successful establishing of point correspondences between consecutive image frames is important in tasks such as visual odometry,structure from motion or simultaneous localization and mapping. We present the architecture of the compact, energy-efficient dedicated hardware processors, enabling fast feature detection and matching. 
+
+## Citation
 
 You are free to use the code for research/hobby purposes. If you plan to use the code or its fragments in a commercial application, please contact the Authors, so that further agreements can be made. If the posted code is useful to you, the Authors would be really grateful if you cite the folowing articles:
 
